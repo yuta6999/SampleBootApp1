@@ -8,18 +8,10 @@
       rel="stylesheet">
 </head>
 
-<!--▼リスト3-13-->
+<!--▼リスト4-4-->
 <body class="container">
-  <h1 class="display-4 mb-4">Hello page</h1>
-  <div class="alert alert-primary" th:if="${flag}">
-    <h5>Alert</h5>
-    <p th:text="${msg}"></p>
-  </div>
-  <div class="card" th:unless="${flag}">
-    <div class="card-body">
-      <h5 class="card-title">Message</h5>
-      <p class="card-text" th:text="${msg}"></p>
-    </div>
-  </div>
+  <h1 class="display-4 mb-4" th:text="${title}"></h1>
+  <p th:text="${msg}"></p>
+  <pre th:text="${data}"></pre>
 </body>
 </html>

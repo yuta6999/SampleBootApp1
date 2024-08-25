@@ -1,20 +1,28 @@
+//▼リスト4-3
 package com.example.sample1app;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView; 
+import org.springframework.web.servlet.ModelAndView;
 
-//▼リスト3-12
+import com.example.sample1app.repositories.PersonRepository;
+
 @Controller
 public class HelloController {
-  private boolean flag = false;
   
+	// Beanオブジェクトに関連付けする
+  @Autowired
+  PersonRepository repository;
+
   @RequestMapping("/")
   public ModelAndView index(ModelAndView mav) {
-    flag = !flag;
     mav.setViewName("index");
-    mav.addObject("flag", flag);
-    mav.addObject("msg", "サンプルのメッセージです。");
+    mav.addObject("title", "Hello page");
+    mav.addObject("msg","this is JPA sample data.");
+   Iterable<Person> list = repository.findAll();
+    mav.addObject("data",list);
     return mav;
   }
+
 }
