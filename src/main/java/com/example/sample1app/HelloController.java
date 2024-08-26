@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,26 +26,40 @@ public class HelloController {
   @Autowired
   PersonRepository repository;
 
-  @RequestMapping("/")
-  public ModelAndView index(
-      @ModelAttribute("formModel") Person Person,
-      ModelAndView mav) {
-    mav.setViewName("index");
-    mav.addObject("title", "Hello page");
-    mav.addObject("msg","this is JPA sample data.");
-    List<Person> list = repository.findAll();
-    mav.addObject("data",list);
-    return mav;
-  }
+//  ▼リスト4-15
+@RequestMapping("/")
+public ModelAndView index(
+   @ModelAttribute("formModel") Person Person,
+   ModelAndView mav) {
+ mav.setViewName("index");
+ mav.addObject("title", "Hello page");
+ mav.addObject("msg","this is JPA sample data.");
+ List<Person> list = repository.findAll();
+ mav.addObject("data",list);
+ return mav;
+}
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
-  @Transactional
-  public ModelAndView form(
-      @ModelAttribute("formModel") Person Person, 
-      ModelAndView mav) {
-    repository.saveAndFlush(Person);
-    return new ModelAndView("redirect:/");
-  }
+@RequestMapping(value = "/", method = RequestMethod.POST)
+@Transactional
+public ModelAndView form(
+   @ModelAttribute("formModel") @Validated Person person, 
+   BindingResult result,
+   ModelAndView mav) {
+ ModelAndView res = null;
+ System.out.println(result.getFieldErrors());
+ if (!result.hasErrors()){
+   repository.saveAndFlush(person);
+   res = new ModelAndView("redirect:/");
+ } else {
+   mav.setViewName("index");
+   mav.addObject("title", "Hello page");
+   mav.addObject("msg","sorry, error is occurred...");
+   Iterable<Person> list = repository.findAll();
+   mav.addObject("datalist",list);
+   res = mav;
+ }
+ return res;
+}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView edit(@ModelAttribute Person Person, 
