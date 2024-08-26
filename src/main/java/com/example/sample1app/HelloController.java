@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +26,19 @@ public class HelloController {
   
   @Autowired
   PersonRepository repository;
+  
+  @Autowired
+  PersonDAOPersonImpl dao;
 
-//  ▼リスト4-15
-@RequestMapping("/")
-public ModelAndView index(
-   @ModelAttribute("formModel") Person Person,
-   ModelAndView mav) {
- mav.setViewName("index");
- mav.addObject("title", "Hello page");
- mav.addObject("msg","this is JPA sample data.");
- List<Person> list = repository.findAll();
- mav.addObject("data",list);
- return mav;
-}
+//▼リスト5-3
+  @RequestMapping(value = "/find", method = RequestMethod.GET)
+  public ModelAndView index(ModelAndView mav) {
+    mav.setViewName("find");
+    mav.addObject("msg","Personのサンプルです。");
+    Iterable<Person> list = dao.getAll();
+    mav.addObject("data", list);
+    return mav;
+  }
 
 @RequestMapping(value = "/", method = RequestMethod.POST)
 @Transactional
@@ -119,5 +120,23 @@ public ModelAndView form(
 	  p3.setAge(17);
 	  p3.setMail("sachico@happy");
 	  repository.saveAndFlush(p3);
+	}
+	
+//	▼リスト5-8
+	@RequestMapping(value = "/find", method = RequestMethod.POST)
+	public ModelAndView search(HttpServletRequest request,
+	    ModelAndView mav) {
+	  mav.setViewName("find");
+	  String param = request.getParameter("find_str");
+	  if (param == ""){
+	    mav = new ModelAndView("redirect:/find");
+	  } else {
+	    mav.addObject("title","Find result");
+	    mav.addObject("msg","「" + param + "」の検索結果");
+	    mav.addObject("value",param);
+	    List<Person> list = dao.findByName(param);
+	    mav.addObject("data", list);
+	  }
+	  return mav;
 	}
 }
