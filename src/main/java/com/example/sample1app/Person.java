@@ -38,7 +38,9 @@ public class Person {
   @Max(value=200, message="200歳以上って、魔女ですか？")
   private Integer age;
   
+//  ▼リスト4-26
   @Column(nullable = true)
+//  @Phone(onlyNumber=true)
   private String memo;
 
   public long getId() {
