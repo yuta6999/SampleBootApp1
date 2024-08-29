@@ -3,10 +3,8 @@
 <html>
 <head>
   <title th:text="${title}"></title>
-  <meta http-equiv="Content-Type" 
-    content="text/html; charset=UTF-8" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="container">
@@ -14,11 +12,9 @@
   <p th:text="${msg}"></p>
   <form method="post" action="/find">
     <div class="input-group">
-      <input type="text" class="form-control me-1"
-          name="find_str" th:value="${value}" />
+      <input type="text" class="form-control me-1" name="find_str" th:value="${value}" />
       <span class="input-group-btn">
-        <input type="submit" class="btn btn-primary px-4" 
-            value="Click" />
+        <input type="submit" class="btn btn-primary px-4" value="Click" />
       </span>
     </div>
   </form>
