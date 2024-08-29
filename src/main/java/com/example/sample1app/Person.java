@@ -13,68 +13,72 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-
 //▼リスト4-18
 @Entity
-@Table(name="people")
+@Table(name = "people")
 public class Person {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column
-  @NotNull
-  private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column
+	@NotNull
+	private long id;
 
-  @Column(length = 50, nullable = false)
-  @NotBlank(message="名前は書かないとダメ！")
-  private String name;
+	@Column(length = 50, nullable = false)
+	@NotBlank(message = "名前は書かないとダメ！")
+	private String name;
 
-  @Column(length = 200, nullable = true)
-  @Email (message="メールアドレスを教えて♡")
-  private String mail;
+	@Column(length = 200, nullable = true)
+	@Email(message = "メールアドレスを教えて♡")
+	private String mail;
 
-  @Column(nullable = true)
-  @Min(value=0, message="いやいや、マイナスの歳ってないでしょ？")
-  @Max(value=200, message="200歳以上って、魔女ですか？")
-  private Integer age;
-  
-//  ▼リスト4-26
-  @Column(nullable = true)
-//  @Phone(onlyNumber=true)
-  private String memo;
+	@Column(nullable = true)
+	@Min(value = 0, message = "いやいや、マイナスの歳ってないでしょ？")
+	@Max(value = 200, message = "200歳以上って、魔女ですか？")
+	private Integer age;
 
-  public long getId() {
-    return id;
-  }
-  public void setId(long id) {
-    this.id = id;
-  }
+	//  ▼リスト4-26
+	@Column(nullable = true)
+	//  @Phone(onlyNumber=true)
+	private String memo;
 
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
-  }
+	public long getId() {
+		return id;
+	}
 
-  public String getMail() {
-    return mail;
-  }
-  public void setMail(String mail) {
-    this.mail = mail;
-  }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-  public Integer getAge() {
-    return age;
-  }
-  public void setAge(Integer age) {
-    this.age = age;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public String getMemo() {
-    return memo;
-  }
-  public void setMemo(String memo) {
-    this.memo = memo;
-  }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
 }

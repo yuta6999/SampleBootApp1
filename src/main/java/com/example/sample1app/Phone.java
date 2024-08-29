@@ -19,12 +19,12 @@ import jakarta.validation.ReportAsSingleViolation;
 //▼リスト4-24
 public @interface Phone {
 
-  String message() default "please input a phone number.";
+	String message() default "please input a phone number.";
 
-  Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-  Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
-  boolean onlyNumber() default false;
-  
+	boolean onlyNumber() default false;
+
 }
